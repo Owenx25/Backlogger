@@ -23,6 +23,18 @@ namespace Backlogger
         public MainWindow()
         {
             InitializeComponent();
+
+            List<BacklogRow> entries = new List<BacklogRow>();
+            entries.Add(new BacklogRow()
+            {
+                Name = "Mafia 3",
+                Date = DateTime.Today,
+                Priority = PriorityType.Low,
+                Notes = "PS4 Title"
+            });
+
+            TestDG.ItemsSource = entries;
+            TestDG.DataContext = entries;
         }
     }
 }

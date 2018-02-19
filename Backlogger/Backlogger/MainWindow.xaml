@@ -1,12 +1,83 @@
 ﻿<Window x:Class="Backlogger.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Backlogger"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Backlogger" Height="350" Width="525">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="PriorityType" MethodName="GetValues" ObjectType="{x:Type core:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="local:PriorityType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <Grid>
-        
+        <TabControl TabStripPlacement="Left" Width="auto">
+            <TabItem Header="Games">
+                <DataGrid Name="TestDG" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        <DataGridComboBoxColumn Header="Priority"  SelectedItemBinding="{Binding Priority}" ItemsSource="{Binding Source={StaticResource PriorityType}}"/>
+                        <DataGridTemplateColumn Header="Started">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DatePicker SelectedDate="{Binding Date}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!--<Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="This should be a list of games I want to play"/>
+                    <ListBox Grid.Row="1">
+                        <ListBoxItem>Mafia 3</ListBoxItem>
+                        <ListBoxItem>Kingdom Hearts 2</ListBoxItem>
+                        <ListBoxItem>Persona 5</ListBoxItem>
+                        <ListBoxItem>Darkwood</ListBoxItem>
+                    </ListBox>
+                </Grid>-->
+            </TabItem>
+            
+            
+            <TabItem Header="Books">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="This should be a list of books I want to read"/>
+                    <ListBox Grid.Row="1">
+                        <ListBoxItem>KGB</ListBoxItem>
+                        <ListBoxItem>Skyrim</ListBoxItem>
+                        <ListBoxItem>Future Noir</ListBoxItem>
+                        <ListBoxItem>Necronomicon</ListBoxItem>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Movies">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="This should be a list of movies I want to watch"/>
+                    <ListBox Grid.Row="1">
+                        <ListBoxItem>Django</ListBoxItem>
+                        <ListBoxItem>Unforgivien</ListBoxItem>
+                        <ListBoxItem>The Assassination of Jesse James</ListBoxItem>
+                        <ListBoxItem>Who Framed Roger Rabbit</ListBoxItem>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

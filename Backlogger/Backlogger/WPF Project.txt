@@ -1,0 +1,21 @@
+Design Ideas for the Application
+=================================
+- Tabs at the top of the window show which category is selected
+	- Backlog categories would be things like games, movies, hows, books, etc.
+	- The User can add number of categories with their own titles and descriptions
+	- User starts with a few basic columns like 
+- Reminder system where you can set recurring reminders for each item on a tab
+- User can add their own custom columns in each tab
+- Drag items in a tab to reorder(might want to use a framwork for this)
+
+Backend Brainstorm
+===================
+- The application uses a list of Table objects
+- Each table object contains Name, Add Date, Priority and Notes
+	- This can be toggled in settings except for Name
+	- Add date is generated at the creation of the object
+		- Date format option?
+	- Within a table object is a list of Columns
+		- Columns are entirely user created
+		- always strings but user has to choose data type on creation
+			- May be anble to do some tricky WPF stuff with this
