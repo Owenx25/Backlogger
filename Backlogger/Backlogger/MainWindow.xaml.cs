@@ -27,6 +27,9 @@ namespace Backlogger
 
             List<BacklogRow> entries = new List<BacklogRow>();
             entries.Add(new BacklogRow("Mafia 3", DateTime.Today, PriorityType.Low, "PS4 Title"));
+            entries.Add(new BacklogRow("Persona 5", DateTime.Today, PriorityType.Low, "PS4 Title"));
+            entries.Add(new BacklogRow("Journey", DateTime.Today, PriorityType.Low, "PS4 Title"));
+            entries.Add(new BacklogRow("Darkwood", DateTime.Today, PriorityType.Low, "Top-down Horror on steam"));
             //BacklogTable Games = new BacklogTable("Games", entries);
             BacklogTabs.Add(new BacklogTable("Games", entries));
             TabCont.ItemsSource = BacklogTabs;

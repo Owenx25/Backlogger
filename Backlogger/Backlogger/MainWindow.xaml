@@ -30,43 +30,11 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" />
-                            <DataGridTextColumn Header="Completed?" Binding="{Binding Completed}" />
+                            <DataGridCheckBoxColumn Header="Completed?" Binding="{Binding Completed}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DataTemplate>
             </TabControl.ContentTemplate>
-
-            <!--<TabItem Header="Books">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="This should be a list of books I want to read"/>
-                    <ListBox Grid.Row="1">
-                        <ListBoxItem>KGB</ListBoxItem>
-                        <ListBoxItem>Skyrim</ListBoxItem>
-                        <ListBoxItem>Future Noir</ListBoxItem>
-                        <ListBoxItem>Necronomicon</ListBoxItem>
-                    </ListBox>
-                </Grid>
-            </TabItem>
-
-            <TabItem Header="Movies">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="This should be a list of movies I want to watch"/>
-                    <ListBox Grid.Row="1">
-                        <ListBoxItem>Django</ListBoxItem>
-                        <ListBoxItem>Unforgivien</ListBoxItem>
-                        <ListBoxItem>The Assassination of Jesse James</ListBoxItem>
-                        <ListBoxItem>Who Framed Roger Rabbit</ListBoxItem>
-                    </ListBox>
-                </Grid>
-            </TabItem>-->
         </TabControl>
     </Grid>
 </Window>
