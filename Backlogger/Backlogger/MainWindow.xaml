@@ -15,39 +15,28 @@
         </ObjectDataProvider>
     </Window.Resources>
     <Grid>
-        <TabControl TabStripPlacement="Left" Width="auto">
-            <TabItem Header="Games">
-                <DataGrid Name="TestDG" AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                        <DataGridComboBoxColumn Header="Priority"  SelectedItemBinding="{Binding Priority}" ItemsSource="{Binding Source={StaticResource PriorityType}}"/>
-                        <DataGridTemplateColumn Header="Started">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <DatePicker SelectedDate="{Binding Date}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" />
-                    </DataGrid.Columns>
-                </DataGrid>
-                <!--<Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="This should be a list of games I want to play"/>
-                    <ListBox Grid.Row="1">
-                        <ListBoxItem>Mafia 3</ListBoxItem>
-                        <ListBoxItem>Kingdom Hearts 2</ListBoxItem>
-                        <ListBoxItem>Persona 5</ListBoxItem>
-                        <ListBoxItem>Darkwood</ListBoxItem>
-                    </ListBox>
-                </Grid>-->
-            </TabItem>
-            
-            
-            <TabItem Header="Books">
+        <TabControl TabStripPlacement="Left" Width="auto" Name="TabCont" DisplayMemberPath="Name">
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Rows}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                            <DataGridComboBoxColumn Header="Priority"  SelectedItemBinding="{Binding Priority}" ItemsSource="{Binding Source={StaticResource PriorityType}}"/>
+                            <DataGridTemplateColumn Header="Started">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding Date}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" />
+                            <DataGridTextColumn Header="Completed?" Binding="{Binding Completed}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+
+            <!--<TabItem Header="Books">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -77,7 +66,7 @@
                         <ListBoxItem>Who Framed Roger Rabbit</ListBoxItem>
                     </ListBox>
                 </Grid>
-            </TabItem>
+            </TabItem>-->
         </TabControl>
     </Grid>
 </Window>

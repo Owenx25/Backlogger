@@ -11,15 +11,62 @@ namespace Backlogger
     public class BacklogRow
     {
         // Name of the entry
-        public String Name { get; set; }
+        private String _name;
+        public String Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
         // Date the entry was created
-        public DateTime Date { get; set; }
+        private DateTime _date;
+        public DateTime Date
+        {
+            get { return _date; }
+            set { _date = value; }
+        }
+
         // Priority level of the entry
-        public PriorityType Priority { get; set; }
+        private PriorityType _priority;
+        public PriorityType Priority
+        {
+            get { return _priority; }
+            set { _priority = value; }
+        }
+
         // Any notes about the entry
-        public String Notes { get; set; }
+        private String _notes;
+        public String Notes
+        {
+            get { return _notes; }
+            set { _notes = value; }
+        }
+
+        // Status of row
+        private Boolean _completed;
+        public Boolean Completed
+        {
+            get { return _completed; }
+            set { _completed = value; }
+        }
 
         // User-created list of columns
-        public List<String> CustomColumns = new List<string>();
+        public List<String> _customColumns;
+        public List<String> CustomColumns
+        {
+            get { return _customColumns; }
+            set { _customColumns = value; }
+        }
+
+        // Regular Constructor
+        public BacklogRow(String name, DateTime date, PriorityType priority, String notes)
+        {
+            Name = name;
+            Date = date;
+            Priority = priority;
+            Notes = notes;
+            CustomColumns = new List<string>();
+            Completed = false;
+        }
     }
 }
