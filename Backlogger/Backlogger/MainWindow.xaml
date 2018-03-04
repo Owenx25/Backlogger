@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Backlogger"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
         Title="Backlogger" Height="350" Width="525">
     <Window.Resources>
@@ -14,13 +15,21 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="New" CanExecute="NewCanExecute" Executed="NewExecuted"/>
+    </Window.CommandBindings>
     <Grid>
-        <TabControl TabStripPlacement="Left" Width="auto" Name="TabCont" DisplayMemberPath="Name">
+        <TabControl TabStripPlacement="Left" Width="auto" Name="TabCont" DisplayMemberPath="Name" ItemsSource="{Binding BacklogTabs}" SelectedIndex="0">
             <TabControl.ContentTemplate>
                 <DataTemplate>
                     <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Rows}">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="New" />
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                             <DataGridComboBoxColumn Header="Priority"  SelectedItemBinding="{Binding Priority}" ItemsSource="{Binding Source={StaticResource PriorityType}}"/>
                             <DataGridTemplateColumn Header="Started">
                                 <DataGridTemplateColumn.CellTemplate>

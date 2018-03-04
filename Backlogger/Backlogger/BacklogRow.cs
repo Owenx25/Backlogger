@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,14 +9,18 @@ namespace Backlogger
 {
     public enum PriorityType { Low, Medium, High }
 
-    public class BacklogRow
+    public class BacklogRow : INotifyPropertyChanged
     {
         // Name of the entry
         private String _name;
         public String Name
         {
             get { return _name; }
-            set { _name = value; }
+            set
+            {
+                _name = value;
+                RaisePropertyChanged("Name");
+            }
         }
 
         // Date the entry was created
@@ -23,7 +28,11 @@ namespace Backlogger
         public DateTime Date
         {
             get { return _date; }
-            set { _date = value; }
+            set
+            {
+                _date = value;
+                RaisePropertyChanged("Date");
+            }
         }
 
         // Priority level of the entry
@@ -31,7 +40,11 @@ namespace Backlogger
         public PriorityType Priority
         {
             get { return _priority; }
-            set { _priority = value; }
+            set
+            {
+                _priority = value;
+                RaisePropertyChanged("Priority");
+            }
         }
 
         // Any notes about the entry
@@ -39,7 +52,11 @@ namespace Backlogger
         public String Notes
         {
             get { return _notes; }
-            set { _notes = value; }
+            set
+            {
+                _notes = value;
+                RaisePropertyChanged("Notes");
+            }
         }
 
         // Status of row
@@ -47,7 +64,11 @@ namespace Backlogger
         public Boolean Completed
         {
             get { return _completed; }
-            set { _completed = value; }
+            set
+            {
+                _completed = value;
+                RaisePropertyChanged("Completed");
+            }
         }
 
         // User-created list of columns
@@ -55,7 +76,11 @@ namespace Backlogger
         public List<String> CustomColumns
         {
             get { return _customColumns; }
-            set { _customColumns = value; }
+            set
+            {
+                _customColumns = value;
+                RaisePropertyChanged("CustomColumns");
+            }
         }
 
         // Regular Constructor
@@ -68,5 +93,11 @@ namespace Backlogger
             CustomColumns = new List<string>();
             Completed = false;
         }
+
+        void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs(prop)); }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

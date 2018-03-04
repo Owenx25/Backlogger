@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Backlogger
 {
-    public class BacklogTable
+    public class BacklogTable : INotifyPropertyChanged
     {
         // Name of the table
         String _name;
         public String Name
         {
             get { return _name; }
-            set { _name = value; }
+            set
+            {
+                _name = value;
+                RaisePropertyChanged("Name");
+            }
         }
 
         // List of all rows
@@ -21,13 +26,20 @@ namespace Backlogger
         public List<BacklogRow> Rows
         {
             get { return _rows; }
-            set { _rows = value; }
+            set
+            {
+                _rows = value;
+                RaisePropertyChanged("Rows");
+            }
         }
 
         public void PushRow (BacklogRow row)
         {
             if (row != null)
+            {
                 Rows.Add(row);
+                RaisePropertyChanged("Rows");
+            }  
         }
 
         public BacklogTable(String name, List<BacklogRow> rows)
@@ -35,5 +47,11 @@ namespace Backlogger
             Name = name;
             Rows = rows;
         }
+
+        void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs(prop)); }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

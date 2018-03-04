@@ -20,24 +20,39 @@ namespace Backlogger
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel MainWindowVM;
+
         public MainWindow()
         {
             InitializeComponent();
-            List<BacklogTable> BacklogTabs = new List<Backlogger.BacklogTable>();
-
+            MainWindowVM = new MainWindowViewModel();
             List<BacklogRow> entries = new List<BacklogRow>();
-            entries.Add(new BacklogRow("Mafia 3", DateTime.Today, PriorityType.Low, "PS4 Title"));
-            entries.Add(new BacklogRow("Persona 5", DateTime.Today, PriorityType.Low, "PS4 Title"));
-            entries.Add(new BacklogRow("Journey", DateTime.Today, PriorityType.Low, "PS4 Title"));
-            entries.Add(new BacklogRow("Darkwood", DateTime.Today, PriorityType.Low, "Top-down Horror on steam"));
-            //BacklogTable Games = new BacklogTable("Games", entries);
-            BacklogTabs.Add(new BacklogTable("Games", entries));
-            TabCont.ItemsSource = BacklogTabs;
+            entries.Add(new BacklogRow("Name 1", DateTime.Today, PriorityType.High, "Example Note"));
+            entries.Add(new BacklogRow("Name 2", DateTime.Today, PriorityType.Medium, "Example Note"));
+            entries.Add(new BacklogRow("Name 3", DateTime.Today, PriorityType.Low, "Example Note"));
+            entries.Add(new BacklogRow("Name 4", DateTime.Today, PriorityType.Low, "Example Note"));
+            entries.Add(new BacklogRow("Name 5", DateTime.Today, PriorityType.Low, "Example Note"));
+            MainWindowVM.BacklogTabs.Add(new BacklogTable("Test", entries));
 
+            //entries.Add(new BacklogRow("Mafia 3", DateTime.Today, PriorityType.Low, "PS4 Title"));
+            //entries.Add(new BacklogRow("Persona 5", DateTime.Today, PriorityType.Low, "PS4 Title"));
+            //entries.Add(new BacklogRow("Journey", DateTime.Today, PriorityType.Low, "PS4 Title"));
+            //entries.Add(new BacklogRow("Darkwood", DateTime.Today, PriorityType.Low, "Top-down Horror on steam"));
+            //BacklogTabs.Add(new BacklogTable("Games", entries));
 
-            //TestDG.ItemsSource = Games.Rows;
-            //TestDG.DataContext = Games;
-            //TableTab.DataContext = Games;
+            DataContext = MainWindowVM;
+        }
+
+        void NewCanExecute(object target, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        void NewExecuted(object target, ExecutedRoutedEventArgs e)
+        {
+            TabControl tabs = e.Source as TabControl;
+            BacklogTable table = tabs.SelectedContent as BacklogTable;
+            MainWindowVM.AddRow(table, new BacklogRow("Name 6", DateTime.Today, PriorityType.Low, "Example Note"));
         }
     }
 }
