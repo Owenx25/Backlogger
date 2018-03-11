@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Backlogger
 {
@@ -26,12 +17,14 @@ namespace Backlogger
         {
             InitializeComponent();
             MainWindowVM = new MainWindowViewModel();
-            List<BacklogRow> entries = new List<BacklogRow>();
-            entries.Add(new BacklogRow("Name 1", DateTime.Today, PriorityType.High, "Example Note"));
-            entries.Add(new BacklogRow("Name 2", DateTime.Today, PriorityType.Medium, "Example Note"));
-            entries.Add(new BacklogRow("Name 3", DateTime.Today, PriorityType.Low, "Example Note"));
-            entries.Add(new BacklogRow("Name 4", DateTime.Today, PriorityType.Low, "Example Note"));
-            entries.Add(new BacklogRow("Name 5", DateTime.Today, PriorityType.Low, "Example Note"));
+            ObservableCollection<BacklogRow> entries = new ObservableCollection<BacklogRow>
+            {
+                new BacklogRow("Name 1", DateTime.Today, PriorityType.High, "Example Note"),
+                new BacklogRow("Name 2", DateTime.Today, PriorityType.Medium, "Example Note"),
+                new BacklogRow("Name 3", DateTime.Today, PriorityType.Low, "Example Note"),
+                new BacklogRow("Name 4", DateTime.Today, PriorityType.Low, "Example Note"),
+                new BacklogRow("Name 5", DateTime.Today, PriorityType.Low, "Example Note")
+            };
             MainWindowVM.BacklogTabs.Add(new BacklogTable("Test", entries));
 
             //entries.Add(new BacklogRow("Mafia 3", DateTime.Today, PriorityType.Low, "PS4 Title"));
@@ -50,9 +43,10 @@ namespace Backlogger
 
         void NewExecuted(object target, ExecutedRoutedEventArgs e)
         {
+            MainWindow window = target as MainWindow;
             TabControl tabs = e.Source as TabControl;
             BacklogTable table = tabs.SelectedContent as BacklogTable;
-            MainWindowVM.AddRow(table, new BacklogRow("Name 6", DateTime.Today, PriorityType.Low, "Example Note"));
+            MainWindowVM.AddRow(table.Name, new BacklogRow("Name", DateTime.Today, PriorityType.Low, "Description"));
         }
     }
 }

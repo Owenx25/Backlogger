@@ -30,20 +30,21 @@ namespace Backlogger
             }
         }
 
-        public void AddRow(BacklogTable table, BacklogRow row)
+        public void AddRow(String tableName, BacklogRow row)
         {
+            // Need to verify table is in BacklogTabs
+            BacklogTable table = BacklogTabs.Where(tbl => tbl.Name == tableName).First();
+            if (table == null)
+                throw new ArgumentException("Table does not exist");
             table.PushRow(row);
-            OnPropertyChanged("BacklogTabs");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }

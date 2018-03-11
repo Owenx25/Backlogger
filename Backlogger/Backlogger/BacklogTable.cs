@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -22,14 +23,13 @@ namespace Backlogger
         }
 
         // List of all rows
-        List<BacklogRow> _rows;
-        public List<BacklogRow> Rows
+        ObservableCollection<BacklogRow> _rows;
+        public ObservableCollection<BacklogRow> Rows
         {
             get { return _rows; }
             set
             {
                 _rows = value;
-                RaisePropertyChanged("Rows");
             }
         }
 
@@ -42,7 +42,7 @@ namespace Backlogger
             }  
         }
 
-        public BacklogTable(String name, List<BacklogRow> rows)
+        public BacklogTable(String name, ObservableCollection<BacklogRow> rows)
         {
             Name = name;
             Rows = rows;
@@ -50,7 +50,7 @@ namespace Backlogger
 
         void RaisePropertyChanged(string prop)
         {
-            if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs(prop)); }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }
