@@ -15,17 +15,18 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </Window.Resources>
-    <Window.CommandBindings>
-        <CommandBinding Command="New" CanExecute="NewCanExecute" Executed="NewExecuted"/>
-    </Window.CommandBindings>
     <Grid>
         <TabControl TabStripPlacement="Left" Width="auto" Name="TabCont" DisplayMemberPath="Name" ItemsSource="{Binding BacklogTabs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
+            <TabControl.Resources>
+                <local:BindingProxy x:Key="DataContextProxy" Data="{Binding}" />
+            </TabControl.Resources>
             <TabControl.ContentTemplate>
                 <DataTemplate>
                     <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Rows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Command="New"/>
+                                <MenuItem Header="Add Row" Command="{Binding Path=Data.AddCommand, Source={StaticResource DataContextProxy}}" CommandParameter="{Binding Name}"/>
+                                <MenuItem Header="Delete Row" Command="{Binding Path=Data.DeleteCommand, Source={StaticResource DataContextProxy}}" CommandParameter="{Binding Name}"/>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                         <DataGrid.Columns>

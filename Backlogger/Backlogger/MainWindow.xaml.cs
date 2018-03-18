@@ -35,18 +35,5 @@ namespace Backlogger
 
             DataContext = MainWindowVM;
         }
-
-        void NewCanExecute(object target, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        void NewExecuted(object target, ExecutedRoutedEventArgs e)
-        {
-            MainWindow window = target as MainWindow;
-            TabControl tabs = e.Source as TabControl;
-            BacklogTable table = tabs.SelectedContent as BacklogTable;
-            MainWindowVM.AddRow(table.Name, new BacklogRow("Name", DateTime.Today, PriorityType.Low, "Description"));
-        }
     }
 }

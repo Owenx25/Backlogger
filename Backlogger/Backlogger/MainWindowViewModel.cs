@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Backlogger
 {
@@ -14,6 +16,8 @@ namespace Backlogger
 
         public MainWindowViewModel()
         {
+            addCommand = new Command(DoAddCommand);
+            deleteCommand = new Command(DoDeleteCommand);
             BacklogTabs = new ObservableCollection<BacklogTable>();
         }
 
@@ -38,6 +42,34 @@ namespace Backlogger
                 throw new ArgumentException("Table does not exist");
             table.PushRow(row);
         }
+        
+        // Command Stuff -------
+        /// <summary>
+        /// Command when user adds a row
+        /// </summary>
+        private Command addCommand;
+        public Command AddCommand
+        {
+            get { return addCommand; }
+        }
+        private void DoAddCommand()
+        {
+            Debug.WriteLine("Add command go");
+        }
+        /// <summary>
+        /// Command when user deletes a row
+        /// </summary>
+        private Command deleteCommand;
+        public Command DeleteCommand
+        {
+            get { return deleteCommand; }
+        }
+        private void DoDeleteCommand()
+        {
+            Debug.WriteLine("Delete command go");
+        }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -47,4 +79,23 @@ namespace Backlogger
         }
 
     }
+
+    //class NewRowCommand : ICommand
+    //{
+    //    public event EventHandler CanExecuteChanged;
+
+    //    public bool CanExecute(object parameter)
+    //    {
+    //        e.CanExecute = true;
+    //    }
+
+    //    public void Execute(object parameter)
+    //    {
+    //        MainWindow window = target as MainWindow;
+    //        TabControl tabs = e.Source as TabControl;
+    //        BacklogTable table = tabs.SelectedContent as BacklogTable;
+    //        MainWindowVM.AddRow(table.Name, new BacklogRow("Name", DateTime.Today, PriorityType.Low, "Description"));
+    //    }
+    //}
+
 }
