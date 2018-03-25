@@ -30,16 +30,8 @@ namespace Backlogger
             set
             {
                 _rows = value;
+                //RaisePropertyChanged("Rows");
             }
-        }
-
-        public void PushRow (BacklogRow row)
-        {
-            if (row != null)
-            {
-                Rows.Add(row);
-                RaisePropertyChanged("Rows");
-            }  
         }
 
         public BacklogTable(String name, ObservableCollection<BacklogRow> rows)

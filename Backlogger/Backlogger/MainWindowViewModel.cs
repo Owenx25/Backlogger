@@ -14,6 +14,8 @@ namespace Backlogger
     {
         private ObservableCollection<BacklogTable> _backlogTabs;
 
+        public BacklogRow SelectedRow { get; set; }
+
         public MainWindowViewModel()
         {
             addCommand = new Command(DoAddCommand);
@@ -34,27 +36,37 @@ namespace Backlogger
             }
         }
 
-        public void AddRow(String tableName, BacklogRow row)
+        public void AddRow(string tableName, BacklogRow row)
         {
             // Need to verify table is in BacklogTabs
             BacklogTable table = BacklogTabs.Where(tbl => tbl.Name == tableName).First();
             if (table == null)
                 throw new ArgumentException("Table does not exist");
-            table.PushRow(row);
+            table.Rows.Add(row);
         }
-        
+        public void RemoveRow(string tableName, BacklogRow row)
+        {
+            // Need to verify table is in BacklogTabs
+            BacklogTable table = BacklogTabs.Where(tbl => tbl.Name == tableName).First();
+            if (table == null)
+                throw new ArgumentException("Table does not exist");
+            table.Rows.Remove(row);
+        }
+
         // Command Stuff -------
         /// <summary>
         /// Command when user adds a row
         /// </summary>
+
         private Command addCommand;
         public Command AddCommand
         {
             get { return addCommand; }
         }
-        private void DoAddCommand()
+        private void DoAddCommand(object tableName)
         {
-            Debug.WriteLine("Add command go");
+            //Debug.WriteLine("Add row to table " + tableName.ToString());
+            AddRow(tableName as string, new BacklogRow("", DateTime.Today, PriorityType.Low, ""));
         }
         /// <summary>
         /// Command when user deletes a row
@@ -64,10 +76,14 @@ namespace Backlogger
         {
             get { return deleteCommand; }
         }
-        private void DoDeleteCommand()
+        private void DoDeleteCommand(object tableName)
         {
-            Debug.WriteLine("Delete command go");
+            if (SelectedRow != null) {
+                //Debug.WriteLine("Removing row: " + SelectedRow.Name);
+                RemoveRow(tableName as string, SelectedRow);  
+            }
         }
+    
 
 
 

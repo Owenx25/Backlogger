@@ -22,7 +22,8 @@
             </TabControl.Resources>
             <TabControl.ContentTemplate>
                 <DataTemplate>
-                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Rows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Rows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding Path=Data.SelectedRow, Mode=TwoWay, Source={StaticResource DataContextProxy}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <DataGrid.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Add Row" Command="{Binding Path=Data.AddCommand, Source={StaticResource DataContextProxy}}" CommandParameter="{Binding Name}"/>

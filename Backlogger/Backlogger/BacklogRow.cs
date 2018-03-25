@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -48,8 +49,8 @@ namespace Backlogger
         }
 
         // Any notes about the entry
-        private String _notes;
-        public String Notes
+        private string _notes;
+        public string Notes
         {
             get { return _notes; }
             set
@@ -72,25 +73,25 @@ namespace Backlogger
         }
 
         // User-created list of columns
-        public List<String> _customColumns;
-        public List<String> CustomColumns
+        public ObservableCollection<string> _customColumns;
+        public ObservableCollection<string> CustomColumns
         {
             get { return _customColumns; }
             set
             {
                 _customColumns = value;
-                RaisePropertyChanged("CustomColumns");
+                //RaisePropertyChanged("CustomColumns");
             }
         }
 
         // Regular Constructor
-        public BacklogRow(String name, DateTime date, PriorityType priority, String notes)
+        public BacklogRow(string name, DateTime date, PriorityType priority, string notes)
         {
             Name = name;
             Date = date;
             Priority = priority;
             Notes = notes;
-            CustomColumns = new List<string>();
+            CustomColumns = new ObservableCollection<string>();
             Completed = false;
         }
 
