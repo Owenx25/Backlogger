@@ -27,17 +27,20 @@ namespace Backlogger
         public ObservableCollection<BacklogRow> Rows
         {
             get { return _rows; }
-            set
-            {
-                _rows = value;
-                //RaisePropertyChanged("Rows");
-            }
+            set => _rows = value;
         }
 
         public BacklogTable(String name, ObservableCollection<BacklogRow> rows)
         {
             Name = name;
             Rows = rows;
+        }
+
+        public BacklogTable(BacklogTable table)
+        {
+            Name = table.Name;
+            Rows = table.Rows;
+
         }
 
         void RaisePropertyChanged(string prop)

@@ -111,6 +111,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BacklogFile.cs" />
     <Compile Include="BacklogRow.cs" />
     <Compile Include="BacklogTable.cs" />
     <Compile Include="BindingProxy.cs" />

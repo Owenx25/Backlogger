@@ -7,45 +7,74 @@
         xmlns:local="clr-namespace:Backlogger"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="Backlogger" Height="350" Width="525">
+        Title="Backlogger" Height="400" Width="1500">
     <Window.Resources>
         <ObjectDataProvider x:Key="PriorityType" MethodName="GetValues" ObjectType="{x:Type core:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type Type="local:PriorityType"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="OverridesDefaultStyle" Value="False"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
     </Window.Resources>
-    <Grid>
-        <TabControl TabStripPlacement="Left" Width="auto" Name="TabCont" DisplayMemberPath="Name" ItemsSource="{Binding BacklogTabs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
-            <TabControl.Resources>
-                <local:BindingProxy x:Key="DataContextProxy" Data="{Binding}" />
-            </TabControl.Resources>
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Rows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              SelectedItem="{Binding Path=Data.SelectedRow, Mode=TwoWay, Source={StaticResource DataContextProxy}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Add Row" Command="{Binding Path=Data.AddCommand, Source={StaticResource DataContextProxy}}" CommandParameter="{Binding Name}"/>
-                                <MenuItem Header="Delete Row" Command="{Binding Path=Data.DeleteCommand, Source={StaticResource DataContextProxy}}" CommandParameter="{Binding Name}"/>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridComboBoxColumn Header="Priority"  SelectedItemBinding="{Binding Priority}" ItemsSource="{Binding Source={StaticResource PriorityType}}"/>
-                            <DataGridTemplateColumn Header="Started">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Notes" Binding="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridCheckBoxColumn Header="Completed?" Binding="{Binding Completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>
-    </Grid>
+    <StackPanel>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Open Backlog" />
+                    <MenuItem Header="_Export Backlog" />
+                    <MenuItem Header="_Save" />
+                    <Separator />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+                <MenuItem Header="_Table">
+                    <MenuItem Header="_Add Table" />
+                    <MenuItem Header="_Delete Table" />
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Grid>
+            <TabControl Name="TabCont" DisplayMemberPath="Name" ItemsSource="{Binding BacklogTabs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding SelectedTable, Mode=TwoWay}" SelectedIndex="0" TabStripPlacement="Left" Width="auto">
+                <TabControl.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add Table" Command="{Binding Path=AddTableCommand}"/>
+                        <MenuItem Header="Delete Table" Command="{Binding Path=DeleteTableCommand}"/>
+                    </ContextMenu>
+                </TabControl.ContextMenu>
+                <TabControl.Resources>
+                    <local:BindingProxy x:Key="DataContextProxy" Data="{Binding}" />
+                </TabControl.Resources>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Rows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedItem="{Binding Path=Data.SelectedRow, Mode=TwoWay, Source={StaticResource DataContextProxy}}"
+                                  FontSize="20" CanUserResizeColumns="True">
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Add Row" Command="{Binding Path=Data.AddRowCommand, Source={StaticResource DataContextProxy}}" CommandParameter="{Binding Name}"/>
+                                    <MenuItem Header="Delete Row" Command="{Binding Path=Data.DeleteRowCommand, Source={StaticResource DataContextProxy}}" CommandParameter="{Binding Name}"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Width="200" FontSize="15" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridComboBoxColumn Header="Priority" Width="200"  SelectedItemBinding="{Binding Priority}" ItemsSource="{Binding Source={StaticResource PriorityType}}"/>
+                                <DataGridTemplateColumn Header="Started" Width="200">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DatePicker SelectedDate="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Notes" FontSize="15" Width="200" Binding="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridCheckBoxColumn Header="Completed?"  Width="200" Binding="{Binding Completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
+        </Grid>
+    </StackPanel>
 </Window>

@@ -77,11 +77,7 @@ namespace Backlogger
         public ObservableCollection<string> CustomColumns
         {
             get { return _customColumns; }
-            set
-            {
-                _customColumns = value;
-                //RaisePropertyChanged("CustomColumns");
-            }
+            set => _customColumns = value;
         }
 
         // Regular Constructor

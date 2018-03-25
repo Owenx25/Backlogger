@@ -15,11 +15,14 @@ namespace Backlogger
         private ObservableCollection<BacklogTable> _backlogTabs;
 
         public BacklogRow SelectedRow { get; set; }
+        public BacklogTable SelectedTable { get; set; }
 
         public MainWindowViewModel()
         {
-            addCommand = new Command(DoAddCommand);
-            deleteCommand = new Command(DoDeleteCommand);
+            addRowCommand = new Command(DoAddRowCommand);
+            deleteRowCommand = new Command(DoDeleteRowCommand);
+            addTableCommand = new Command(DoAddTableCommand);
+            deleteTableCommand = new Command(DoDeleteTableCommand);
             BacklogTabs = new ObservableCollection<BacklogTable>();
         }
 
@@ -36,54 +39,72 @@ namespace Backlogger
             }
         }
 
-        public void AddRow(string tableName, BacklogRow row)
-        {
-            // Need to verify table is in BacklogTabs
-            BacklogTable table = BacklogTabs.Where(tbl => tbl.Name == tableName).First();
-            if (table == null)
-                throw new ArgumentException("Table does not exist");
-            table.Rows.Add(row);
-        }
-        public void RemoveRow(string tableName, BacklogRow row)
-        {
-            // Need to verify table is in BacklogTabs
-            BacklogTable table = BacklogTabs.Where(tbl => tbl.Name == tableName).First();
-            if (table == null)
-                throw new ArgumentException("Table does not exist");
-            table.Rows.Remove(row);
-        }
-
         // Command Stuff -------
         /// <summary>
         /// Command when user adds a row
         /// </summary>
-
-        private Command addCommand;
-        public Command AddCommand
+        private Command addRowCommand;
+        public Command AddRowCommand
         {
-            get { return addCommand; }
+            get { return addRowCommand; }
         }
-        private void DoAddCommand(object tableName)
+        private void DoAddRowCommand(object tableName)
         {
             //Debug.WriteLine("Add row to table " + tableName.ToString());
-            AddRow(tableName as string, new BacklogRow("", DateTime.Today, PriorityType.Low, ""));
+            if (SelectedRow != null && SelectedTable != null)
+            {
+                //Debug.WriteLine("Removing row: " + SelectedRow.Name);
+                SelectedTable.Rows.Add(new BacklogRow("", DateTime.Today, PriorityType.Low, ""));
+            }
         }
         /// <summary>
         /// Command when user deletes a row
         /// </summary>
-        private Command deleteCommand;
-        public Command DeleteCommand
+        private Command deleteRowCommand;
+        public Command DeleteRowCommand
         {
-            get { return deleteCommand; }
+            get { return deleteRowCommand; }
         }
-        private void DoDeleteCommand(object tableName)
+        private void DoDeleteRowCommand(object tableName)
         {
-            if (SelectedRow != null) {
+            if (SelectedRow != null && SelectedTable != null) {
                 //Debug.WriteLine("Removing row: " + SelectedRow.Name);
-                RemoveRow(tableName as string, SelectedRow);  
+                SelectedTable.Rows.Remove(SelectedRow);
             }
         }
-    
+        /// <summary>
+        /// Command when user adds a Table
+        /// </summary>
+        private Command addTableCommand;
+        public Command AddTableCommand
+        {
+            get { return addTableCommand; }
+        }
+        private void DoAddTableCommand(object tableName)
+        {
+            // This Might be implemented differently because
+            // adding a table will have its own window
+            if (SelectedTable != null)
+            {
+                BacklogTabs.Add(new BacklogTable(SelectedTable));
+            }
+        }
+        /// <summary>
+        /// Command when user deletes a Table
+        /// </summary>
+        private Command deleteTableCommand;
+        public Command DeleteTableCommand
+        {
+            get { return deleteTableCommand; }
+        }
+        private void DoDeleteTableCommand()
+        {
+            if (SelectedTable != null)
+            {
+                BacklogTabs.Remove(SelectedTable);
+            }
+        }
+
 
 
 
@@ -95,23 +116,4 @@ namespace Backlogger
         }
 
     }
-
-    //class NewRowCommand : ICommand
-    //{
-    //    public event EventHandler CanExecuteChanged;
-
-    //    public bool CanExecute(object parameter)
-    //    {
-    //        e.CanExecute = true;
-    //    }
-
-    //    public void Execute(object parameter)
-    //    {
-    //        MainWindow window = target as MainWindow;
-    //        TabControl tabs = e.Source as TabControl;
-    //        BacklogTable table = tabs.SelectedContent as BacklogTable;
-    //        MainWindowVM.AddRow(table.Name, new BacklogRow("Name", DateTime.Today, PriorityType.Low, "Description"));
-    //    }
-    //}
-
 }
