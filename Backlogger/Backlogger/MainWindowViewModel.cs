@@ -19,10 +19,13 @@ namespace Backlogger
 
         public MainWindowViewModel()
         {
+            // Commands
             addRowCommand = new Command(DoAddRowCommand);
             deleteRowCommand = new Command(DoDeleteRowCommand);
             addTableCommand = new Command(DoAddTableCommand);
             deleteTableCommand = new Command(DoDeleteTableCommand);
+            exitCommand = new Command(DoExitCommand);
+
             BacklogTabs = new ObservableCollection<BacklogTable>();
         }
 
@@ -103,6 +106,18 @@ namespace Backlogger
             {
                 BacklogTabs.Remove(SelectedTable);
             }
+        }
+        /// <summary>
+        /// Command when user exits app from toolbar
+        /// </summary>
+        private Command exitCommand;
+        public Command ExitCommand
+        {
+            get { return exitCommand; }
+        }
+        private void DoExitCommand()
+        {
+            System.Windows.Application.Current.Shutdown();
         }
 
 

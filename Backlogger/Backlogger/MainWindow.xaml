@@ -7,41 +7,38 @@
         xmlns:local="clr-namespace:Backlogger"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="Backlogger" Height="400" Width="1500">
+        Title="Backlogger" Height="400" Width="1050">
     <Window.Resources>
         <ObjectDataProvider x:Key="PriorityType" MethodName="GetValues" ObjectType="{x:Type core:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type Type="local:PriorityType"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <Style TargetType="DatePickerTextBox">
-            <Setter Property="OverridesDefaultStyle" Value="False"/>
+        <Style x:Key="cellTextStyle" TargetType="DataGridCell">
             <Setter Property="FontSize" Value="15"/>
         </Style>
     </Window.Resources>
-    <StackPanel>
-        <DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_Open Backlog" />
-                    <MenuItem Header="_Export Backlog" />
-                    <MenuItem Header="_Save" />
-                    <Separator />
-                    <MenuItem Header="_Exit" />
-                </MenuItem>
-                <MenuItem Header="_Table">
-                    <MenuItem Header="_Add Table" />
-                    <MenuItem Header="_Delete Table" />
-                </MenuItem>
-            </Menu>
-        </DockPanel>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open Backlog" />
+                <MenuItem Header="_Export Backlog" />
+                <MenuItem Header="_Save" />
+                <Separator />
+                <MenuItem Header="_Exit" Command="{Binding ExitCommand}"/>
+            </MenuItem>
+            <MenuItem Header="_Table">
+                <MenuItem Header="_Add Table" />
+                <MenuItem Header="_Delete Table" />
+            </MenuItem>
+        </Menu>
         <Grid>
             <TabControl Name="TabCont" DisplayMemberPath="Name" ItemsSource="{Binding BacklogTabs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         SelectedItem="{Binding SelectedTable, Mode=TwoWay}" SelectedIndex="0" TabStripPlacement="Left" Width="auto">
                 <TabControl.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Add Table" Command="{Binding Path=AddTableCommand}"/>
-                        <MenuItem Header="Delete Table" Command="{Binding Path=DeleteTableCommand}"/>
+                        <MenuItem Header="Add Table" Command="{Binding AddTableCommand}"/>
+                        <MenuItem Header="Delete Table" Command="{Binding DeleteTableCommand}"/>
                     </ContextMenu>
                 </TabControl.ContextMenu>
                 <TabControl.Resources>
@@ -60,21 +57,27 @@
                             </DataGrid.ContextMenu>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Name" Width="200" FontSize="15" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <DataGridComboBoxColumn Header="Priority" Width="200"  SelectedItemBinding="{Binding Priority}" ItemsSource="{Binding Source={StaticResource PriorityType}}"/>
+                                <DataGridComboBoxColumn Header="Priority" Width="200" CellStyle="{StaticResource cellTextStyle}" SelectedItemBinding="{Binding Priority}" ItemsSource="{Binding Source={StaticResource PriorityType}}"/>
                                 <DataGridTemplateColumn Header="Started" Width="200">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <DatePicker Margin="0,0,40,0" SelectedDate="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Notes" FontSize="15" Width="200" Binding="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridCheckBoxColumn Header="Completed?"  Width="200" Binding="{Binding Completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTemplateColumn Header="Completed?"  Width="150">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Margin="10,0,0,0" IsChecked="{Binding Completed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
         </Grid>
-    </StackPanel>
+    </DockPanel>
 </Window>

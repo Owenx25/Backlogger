@@ -32,7 +32,7 @@ namespace Backlogger
             //entries.Add(new BacklogRow("Journey", DateTime.Today, PriorityType.Low, "PS4 Title"));
             //entries.Add(new BacklogRow("Darkwood", DateTime.Today, PriorityType.Low, "Top-down Horror on steam"));
             //BacklogTabs.Add(new BacklogTable("Games", entries));
-
+            MainWindowVM.SelectedTable = MainWindowVM.BacklogTabs[0];
             DataContext = MainWindowVM;
         }
     }
